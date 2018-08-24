@@ -507,14 +507,6 @@ A `non_exclusive_where` would return all the main results and only the additiona
 *NB: You won't be able to add an exclusive and a non-exclusive where in the same time*
 
 The related data will be embedded in the returned value having "phone", and "posts" as keys.
-```php
-echo $user->phone->phone_number;
-
-foreach ($user->posts as $post)
-{
-    echo $post->title;
-}
-```
 
 ### Order the results of the relastionship results
 
@@ -528,14 +520,6 @@ A query like the one above should return all the authors with their respective p
 ```php
 $this->author_model->with_posts('fields:...|order_inside:published_at desc, readings asc')->get_all();
 ```
-
-### Order THE MAIN RESULT by the relationship data
-
-You can order the main result by using a field that can be found inside a relationship column.
-```php
-$this->post_model->with_author("order_by:username,asc")->get_all();
-```
-The code above will order all the posts by the username of the authors (ascending).
 
 ### Retrieve data from nested relationships (or should we say retrieve nested relationships data?)
 
