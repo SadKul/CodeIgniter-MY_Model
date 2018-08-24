@@ -461,64 +461,6 @@ The fast and dirty way will simply need the related model name. All else will be
 $this->has_one['address'] = 'Address_model';
 ```
 
-### Has One (one to one) relationship (property)
-
-Has One relationship tells our model that ever record in the table has assigned to it a record in another table. It is my opinion that there is no need to do a reverse relation like in Eloquent, where there is a "belongs to" relationship because, the truth be told, being a "one to one" relationship it's an equality between the entities.
-
-We can define a "one to one" relationship by using the has_one property inside the constructor:
-```php
-class User_model extends MY_Model
-{
-
-	function __construct()
-	{
-		$this->has_one['phone'] = array('foreign_model'=>'Phone_model','foreign_table'=>'phones','foreign_key'=>'user_id','local_key'=>'id');
-	}
- }
- ```
-
-The reverse of the relationship is defined taking care of the foreign key and local key:
-
-```php
-class Phone_model extends MY_Model
-{
-
-	function __construct()
-	{
-		$this->has_one['user'] = array('foreign_model'=>'User_model','foreign_table'=>'users','foreign_key'=>'id','local_key'=>'user_id');
-	}
-}
-```
-
-### Has Many relationship (property)
-
-Has Many relationship tells our model that a record in the table can have many related records in another table. The reverse of this relationship is a has one relation, which translates into a One To Many type of relationship. For a reverse relationship of type Many To Many, we will have another property named Has Many Pivot.
-
-```php
-class User_model extends MY_Model
-{
-
-	function __construct()
-	{
-		$this->has_many['posts'] = array('foreign_model'=>'Post_model','foreign_table'=>'posts','foreign_key'=>'author_id','local_key'=>'id');
-	}
- }
- ```
-
-The reverse of the relationship (which in this case is a one to one) is defined the same:
-
-```php
-class Post_model extends MY_Model
-{
-
-	function __construct()
-	{
-		$this->has_one['user'] = array('foreign_model'=>'User_model','foreign_table'=>'users','foreign_key'=>'id','local_key'=>'user_id');
-	}
-}
-```
-
-
 ## Working with relationships
 
 Every table has a way to interact with other tables. So if your model has relationships with other models, you can define those relationships:
@@ -531,6 +473,7 @@ class User_model extends MY_Model
         $this->has_one['phone'] = 'Phone_model';
         $this->has_one['address'] = array('Address_model','user_id','id');
         $this->has_many['posts'] = 'Post_model';
+	$this->belongs_to['group'] = 'Group_model';
         parent::__construct();
     }
 }
